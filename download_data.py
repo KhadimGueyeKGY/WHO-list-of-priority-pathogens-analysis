@@ -69,7 +69,7 @@ f = open(args.file,'r').read().split('\n')
 for i in range(len(f)):
     if f[i] != '':
         a = f[i].split('\t')
-        fonc (a[1],a[0],pl)
+        fonc (int(a[1]),a[0],pl)
 
 
 
