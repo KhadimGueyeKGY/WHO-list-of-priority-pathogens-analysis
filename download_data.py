@@ -28,7 +28,7 @@ else :
     pl = 'OXFORD_NANOPORE'
 
 def fonc (t,n,p):
-    df= pd.read_csv("https://www.ebi.ac.uk/ena/portal/api/search?query=tax_eq("+str(t)+")%20AND%20instrument_platform=%22"+str(p)+"%22&result=read_run&limit=100000&format=tsv",sep='\t')
+    df= pd.read_csv("https://www.ebi.ac.uk/ena/portal/api/search?query=tax_tree("+str(t)+")%20AND%20instrument_platform=%22"+str(p)+"%22&result=read_run&limit=0&format=tsv",sep='\t')
     run_accession = list(df['run_accession'])
 
     #--------------------------------------selection of ID
