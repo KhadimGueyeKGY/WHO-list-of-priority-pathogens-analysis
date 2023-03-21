@@ -32,7 +32,7 @@ if args.platform == 'ILLUMINA':
                 os.system('mkdir -p '+str(args.output)+'/'+str(id))
                 time = open(str(args.output)+'/'+str(id)+'/time.txt','w')
                 try :
-                    os.system('bactopia --R1 '+str(args.input)+'/'+str(fastq_file[i])+' --R2 '+str(args.input)+'/'+str(fastq_file[i+1])+' --sample '+str(id)+' --datasets datasets/ --outdir '+str(args.output)+'/'+str(id)+'/')
+                    os.system('bactopia --R1 '+str(args.input)+'/'+str(fastq_file[i])+' --R2 '+str(args.input)+'/'+str(fastq_file[i+1])+' --sample '+str(id)+' --datasets datasets/ --outdir '+str(args.output)+'/'+str(id)+'/   --min_reads 1  --genome_size 2200000')
                 except:
                     print('Error '+str(id))
                 end = datetime.now()
@@ -47,7 +47,7 @@ else :
             os.system('mkdir -p '+str(args.output)+'/'+str(id))
             time = open(str(args.output)+'/'+str(id)+'/time.txt','w')
             try :
-                os.system('bactopia --SE '+str(args.input)+'/'+str(fastq_file[i])+' --sample '+str(id)+' --datasets datasets/ --outdir '+str(args.output)+'/'+str(id)+'/')
+                os.system('bactopia --SE '+str(args.input)+'/'+str(fastq_file[i])+' --sample '+str(id)+' --datasets datasets/ --outdir '+str(args.output)+'/'+str(id)+'/   --min_reads 1 --genome_size 2200000')
             except:
                 print('Error '+str(id))
             end = datetime.now()
