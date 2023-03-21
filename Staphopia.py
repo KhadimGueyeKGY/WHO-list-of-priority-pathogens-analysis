@@ -53,7 +53,7 @@ else :
             try :
                 R = str(args.input)+'/'+str(fastq_file[i])
                 SAMPLE = str(id)
-                os.system('singularity exec staphopia_20200127.sif staphopia.py --fq1 '+R+' - --sample '+SAMPLE)
+                os.system('singularity exec staphopia_20200127.sif staphopia.py --fq1 '+R+' --sample '+SAMPLE)
             except:
                 print('Error '+str(id))
             end = datetime.now()
