@@ -53,7 +53,7 @@ spt = open(output+'/samplesheet.csv','w')
 spt.write('sample,fasta\n')
 for i in id2:
     list = ' '.join([str(e) for e  in os.popen('ls '+output+'/'+i,'r').read().split('\n')])
-    if list.fint('scaffolds') != -1:
+    if list.find('scaffolds') != -1:
         spt.write(i+','+i+'/scaffolds.fasta\n')
 spt.close()
 
