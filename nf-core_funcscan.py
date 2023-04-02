@@ -25,7 +25,7 @@ platform = args.platform
 #-----------------------------------genome assembly
 id2 = []
 if platform == 'ILLUMINA':
-    id = os.popen("ls "+input+"/*fastq.gz | cut -d '_' -f1 | sort | uniq",'r').read().split('\n')
+    id = os.popen("cd "+input+"; ls *fastq.gz | cut -d '_' -f1 | sort | uniq",'r').read().split('\n')
     for i in id:
         if i != '':
             try :
@@ -37,7 +37,7 @@ if platform == 'ILLUMINA':
             except:
                 print ("Error "+i)
 else: # ONT
-    id = os.popen("ls "+input+"/*fastq.gz",'r').read().split('\n')
+    id = os.popen("cd "+input+"; ls *fastq.gz",'r').read().split('\n')
     for i in id :
         if i != '':
             try:
