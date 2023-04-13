@@ -25,6 +25,7 @@ input = args.input
 output = args.output
 
 os.system('bactopia prepare '+input+' > '+input+'/ID.txt')
+os.system("sed -i -e 's/single-end/ont/g' "+input+"/ID.txt")
 os.system('bactopia --fastqs --samples '+input+'/ID.txt --datasets datasets --outdir '+output+' --genome_size 2200000 --min_reads 1 --bactopia '+output+' --wf amrfinderplus')
 os.system('rm '+input+'/ID.txt')
 
