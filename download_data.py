@@ -58,8 +58,8 @@ def download (acc,n) :
             random_acc = acc
         for i in random_acc : 
             n.write(i[0]+'\n')
-            os.system('cd '+output+'curl -O '+i[1][0])
-            os.system('cd '+output+'curl -O '+i[1][1])
+            os.system('cd '+output+' ; curl -O '+i[1][0])
+            os.system('cd '+output+' ; curl -O '+i[1][1])
     else : # ONT
         if len (acc) > 30: # 300 for metagenomics
             random_acc = random.sample(acc, 30) # 300 for metagenomics
@@ -67,7 +67,7 @@ def download (acc,n) :
             random_acc = acc
         for i in random_acc : 
             n.write(i[0]+'\n')
-            os.system('cd '+output+'curl -O '+i[1])
+            os.system('cd '+output+' ; curl -O '+i[1])
     n.close()
 
 
