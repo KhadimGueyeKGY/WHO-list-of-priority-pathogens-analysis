@@ -52,8 +52,8 @@ def selection (t,p):
 def download (acc,n) : 
     n = open('id_'+n+'.txt','w')
     if pl== 'ILLUMINA' :
-        if len (acc) > 70:
-            random_acc = random.sample(acc, 70)
+        if len (acc) > 70: # 700 for metagenomics
+            random_acc = random.sample(acc, 70) # 700 for metagenomics
         else :
             random_acc = acc
         for i in random_acc : 
@@ -61,8 +61,8 @@ def download (acc,n) :
             os.system('cd '+output+'curl -O '+i[1][0])
             os.system('cd '+output+'curl -O '+i[1][1])
     else : # ONT
-        if len (acc) > 30:
-            random_acc = random.sample(acc, 30)
+        if len (acc) > 30: # 300 for metagenomics
+            random_acc = random.sample(acc, 30) # 300 for metagenomics
         else :
             random_acc = acc
         for i in random_acc : 
@@ -73,7 +73,7 @@ def download (acc,n) :
 
 
 
-def main ():
+def main (file):
     file = open(file,'r').read().split('\n')
     for i in range(len(file)):
         if file[i] != '':
@@ -83,6 +83,6 @@ def main ():
 
             
 if __name__ == '__main__':
-    main()
+    main(file)
 
 
