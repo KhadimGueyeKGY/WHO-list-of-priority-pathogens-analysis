@@ -1,4 +1,4 @@
-import argparse, os, sys
+import argparse, os
 import pandas as pd
 import random
 
@@ -10,24 +10,28 @@ def get_args():
         |                                                              |
         + ============================================================ +
         """)
-    #parser.add_argument('-t', '--taxo', help='Taxonomy ID', type=int, required=True)
     parser.add_argument('-f', '--file', help='Taxonomy ID', type=str, required=True)
-    ''' Tab file
-        scientific name   Taxon
-    '''
-    #parser.add_argument('-n', '--name', help='Scientific name', type=str, required=False)
+    parser.add_argument('-o', '--output', help='output directory', type=str, required=True)
+    parser.add_argument('-j', '--job', help='Jo name', type=str, required=False)
     parser.add_argument('-p', '--platform', help='Platform', choices=['ILLUMINA','ONT'], required=True)
     args = parser.parse_args()
     return args
 args = get_args()
-#t = args.taxo
-#%22%20AND%20instrument_model=%22Illumina%20MiSeq
+file = args.file
+output = args.output
+job = args.job
+
+# creation of output directory !
+os.system('mkdir -p '+output)
+
 if args.platform == 'ILLUMINA':
     pl = 'ILLUMINA'
 else :
     pl = 'OXFORD_NANOPORE'
 
-def fonc (t,n,p):
+#----------------------  selection of the different metadata and ID colomun for the differents taxonomie_ID 
+
+def selection (t,p):
     df= pd.read_csv("https://www.ebi.ac.uk/ena/portal/api/search?query=tax_tree("+str(t)+")%20AND%20instrument_platform=%22"+str(p)+"%22&result=read_run&limit=0&format=tsv",sep='\t')
     run_accession = list(df['run_accession'])
 
@@ -42,7 +46,10 @@ def fonc (t,n,p):
         else: # ONT
             acc.append([run_accession[i], str(fastq_ftp)])
     
-    #-------------------------------------download
+    return acc
+
+#-------------------------------------download of data
+def download (acc,n) : 
     n = open('id_'+n+'.txt','w')
     if pl== 'ILLUMINA' :
         if len (acc) > 70:
@@ -51,8 +58,8 @@ def fonc (t,n,p):
             random_acc = acc
         for i in random_acc : 
             n.write(i[0]+'\n')
-            os.system('curl -O '+i[1][0])
-            os.system('curl -O '+i[1][1])
+            os.system('cd '+output+'curl -O '+i[1][0])
+            os.system('cd '+output+'curl -O '+i[1][1])
     else : # ONT
         if len (acc) > 30:
             random_acc = random.sample(acc, 30)
@@ -60,24 +67,22 @@ def fonc (t,n,p):
             random_acc = acc
         for i in random_acc : 
             n.write(i[0]+'\n')
-            os.system('curl -O '+i[1])
+            os.system('cd '+output+'curl -O '+i[1])
     n.close()
 
 
 
-f = open(args.file,'r').read().split('\n')
-for i in range(len(f)):
-    if f[i] != '':
-        a = f[i].split('\t')
-        fonc (int(a[1]),a[0],pl)
 
+def main ():
+    file = open(file,'r').read().split('\n')
+    for i in range(len(file)):
+        if file[i] != '':
+            a = file[i].split('\t')
+            accession_selected = selection(int(a[1]),pl)
+            download(accession_selected,a[0])
 
-
-
-
-
-
-
-
+            
+if __name__ == '__main__':
+    main()
 
 
